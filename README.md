@@ -1,5 +1,6 @@
 # Negative Cycler Finder in Python
 [![Build Status](https://travis-ci.org/mnpatil17/negative-cycles.svg?branch=master)](https://travis-ci.org/mnpatil17/negative-cycles)
+[![Latest Version](https://img.shields.io/pypi/v/negative-cycles.svg)](https://pypi.python.org/pypi/negative-cycles/)
 
 
 ### Installation

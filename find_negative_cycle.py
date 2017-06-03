@@ -5,8 +5,8 @@
 #
 
 import numpy as np
-from negative_cycles.bellman_ford import multiplicative_bellman_ford
-from negative_cycles.utils import get_prec
+from bellman_ford import multiplicative_bellman_ford
+from utils import get_prec
 
 
 def find_negative_cycle(graph, graph_labels):

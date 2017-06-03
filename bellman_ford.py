@@ -3,7 +3,7 @@
 #
 
 import numpy as np
-from negative_cycles.utils import get_prec, is_int
+from utils import get_prec, is_int
 
 
 def multiplicative_bellman_ford(graph):

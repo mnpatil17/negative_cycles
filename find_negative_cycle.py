@@ -23,8 +23,8 @@ def find_negative_cycle(graph, graph_labels):
 
     distance, predecessor = multiplicative_bellman_ford(graph, graph_labels)
 
-    for i, curr_a_conversions in enumerate(graph):
-        for j, weight in enumerate(curr_a_conversions):
+    for i, node_a_weights in enumerate(graph):
+        for j, weight in enumerate(node_a_weights):
 
             if weight is None:
                 continue

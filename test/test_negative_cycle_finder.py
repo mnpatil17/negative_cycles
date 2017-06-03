@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from find_negative_cycle import find_negative_cycle
+from negative_cycles import find_negative_cycle
 
 
 class TestBelmanFord(unittest.TestCase):

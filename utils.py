@@ -21,3 +21,7 @@ def get_prec(val):
         split_arr_e = str(val).split('e')
         exp = int(split_arr_e[1])
         return -exp if exp < 0 else 0
+
+
+def is_int(val):
+    return isinstance(val, (int, long))

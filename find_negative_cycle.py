@@ -21,7 +21,7 @@ def find_negative_cycle(graph, graph_labels):
              returns (None, None).
     """
 
-    distance, predecessor = multiplicative_bellman_ford(graph, graph_labels)
+    distance, predecessor = multiplicative_bellman_ford(graph)
 
     for i, node_a_weights in enumerate(graph):
         for j, weight in enumerate(node_a_weights):

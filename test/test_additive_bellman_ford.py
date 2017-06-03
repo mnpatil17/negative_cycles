@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from negative_cycles.bellman_ford import additive_bellman_ford
+from negative_cycles import additive_bellman_ford
 
 
 class TestAdditiveBellmanFord(unittest.TestCase):

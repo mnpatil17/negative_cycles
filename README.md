@@ -9,4 +9,5 @@ For Finding Multiplicative Negative Cycles
 
 ### Testing
 
-If you choose, you can clone this repository locally and run the tests yourself. To run tests, simply run `nosetests` from the `negative_cycles/` directory
+If you choose, you can clone this repository locally and run the tests yourself.
+To run tests, simply run `nosetests` from the `negative_cycles/` directory.

@@ -1,8 +1,6 @@
 # Negative Cycler Finder in Python
 [![Build Status](https://travis-ci.org/mnpatil17/negative-cycles.svg?branch=master)](https://travis-ci.org/mnpatil17/negative-cycles)
 
-For Finding Multiplicative Negative Cycles
-
 
 ### Installation
 

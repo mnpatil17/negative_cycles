@@ -1,5 +1,6 @@
 # Negative Cycler Finder in Python
 [![Build Status](https://travis-ci.org/mnpatil17/negative-cycles.svg?branch=master)](https://travis-ci.org/mnpatil17/negative-cycles)
+
 For Finding Multiplicative Negative Cycles
 
 
@@ -26,7 +27,7 @@ This package allows you to perform the following tasks in Python:
 3. Find negative cycles based on the multiplicative Bellman-Ford algorithm
 
 
-###### Multiplicative Bellman-Ford Algorithm
+#### Multiplicative Bellman-Ford Algorithm
 
 You can run the multiplicative Bellman-Ford Algorithm as follows:
 
@@ -36,7 +37,7 @@ You can run the multiplicative Bellman-Ford Algorithm as follows:
     distance_vector, predecessor_list = multiplicative_bellman_ford(graph)
 
 
-###### Additive Bellman-Ford Algorithm
+#### Additive Bellman-Ford Algorithm
 
 You can run the additive Bellman-Ford Algorithm as follows:
 
@@ -46,7 +47,7 @@ You can run the additive Bellman-Ford Algorithm as follows:
     distance_vector, predecessor_list = additive_bellman_ford(graph)
 
 
-###### Negative Cycles (Multiplicative)
+#### Negative Cycles (Multiplicative)
 
 You can run the multiplicative negative cycles as follows:
 

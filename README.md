@@ -1,5 +1,5 @@
 # Bellman-Ford and Negative Cycles in Python
-[![Build Status](https://travis-ci.org/mnpatil17/negative-cycles.svg?branch=master)](https://travis-ci.org/mnpatil17/negative-cycles)
+[![Build Status](https://travis-ci.org/mnpatil17/negative_cycles.svg?branch=master)](https://travis-ci.org/mnpatil17/negative_cycles)
 [![Latest Version](https://img.shields.io/pypi/v/negative-cycles.svg)](https://pypi.python.org/pypi/negative-cycles/)
 
 

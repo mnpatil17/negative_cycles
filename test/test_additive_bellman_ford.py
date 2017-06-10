@@ -8,18 +8,14 @@ class TestAdditiveBellmanFord(unittest.TestCase):
     def _check(self, actual, expected):
         np.testing.assert_allclose(actual, expected)
 
-
     def _check_eq(self, actual, expected):
         assert actual == expected, 'Two expected {0}, but got {1}'.format(expected, actual)
-
 
     def _check_none(self, actual):
         np.testing.assert_equal(actual, None)
 
-
     def _check_array(self, actual, expected):
         np.testing.assert_array_equal(actual, expected)
-
 
     def test_small_graph(self):
 
@@ -43,7 +39,6 @@ class TestAdditiveBellmanFord(unittest.TestCase):
 
         self._check_array(distance, expected_distance)
         self._check_array(predecessor, expected_predecessor)
-
 
     def test_four_node_graph_with_negative_weight(self):
 
@@ -79,4 +74,3 @@ class TestAdditiveBellmanFord(unittest.TestCase):
 
         self._check_array(distance, expected_distance)
         self._check_array(predecessor, expected_predecessor)
-

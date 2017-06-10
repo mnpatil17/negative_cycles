@@ -8,18 +8,14 @@ class TestNegativeCycles(unittest.TestCase):
     def _check(self, actual, expected):
         np.testing.assert_allclose(actual, expected)
 
-
     def _check_eq(self, actual, expected):
         assert actual == expected, 'Two expected {0}, but got {1}'.format(expected, actual)
-
 
     def _check_none(self, actual):
         np.testing.assert_equal(actual, None)
 
-
     def _check_array(self, actual, expected):
         np.testing.assert_array_equal(actual, expected)
-
 
     def test_small_graph(self):
 
@@ -41,7 +37,6 @@ class TestNegativeCycles(unittest.TestCase):
         cycle, gain = find_negative_cycle(graph, currency_list)
         self._check_array(cycle, ['A', 'B', 'C', 'A'])
         self._check(gain, 1.0666666666666667)
-
 
     def test_four_node_graph(self):
 
@@ -76,16 +71,14 @@ class TestNegativeCycles(unittest.TestCase):
         self._check_none(cycle)
         self._check_none(gain)
 
-
     def test_live_example_graph(self):
 
         currency_list = np.array(['A', 'B', 'C', 'D'])
         graph = np.array([[1.00000000e+00, 1.00000000e+00, 1.09110747e-02, 4.21229992e-02],
                           [1.00000000e+00, 1.00000000e+00, 1.87899286e+01, 7.40192450e+01],
                           [9.16500000e+01, 5.32200000e-02, 1.00000000e+00, None],
-                          [2.37400000e+01, 1.35100000e-02, None,           1.00000000e+00]])
+                          [2.37400000e+01, 1.35100000e-02, None, 1.00000000e+00]])
 
         cycle, gain = find_negative_cycle(graph, currency_list)
         self._check_array(cycle, ['B', 'C', 'A', 'B'])
         self._check(gain, 1722.0969)
-

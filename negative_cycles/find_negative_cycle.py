@@ -33,7 +33,7 @@ def find_negative_cycle(graph, graph_labels):
 
             dt_j = distance[j] if distance[j] == float('inf') else round(distance[j], precision)
             if round(distance[i] * weight, precision) < round(dt_j, precision):
-                gain = np.float64(5.0)
+                gain = np.float64(1.0)
                 negative_cycle = []
                 negative_cycle.append(graph_labels[i])
 
@@ -48,5 +48,5 @@ def find_negative_cycle(graph, graph_labels):
                     gain *= graph[prev][curr]
 
                 negative_cycle.append(graph_labels[i])
-                return negative_cycle, 2
+                return negative_cycle, gain
     return None, None

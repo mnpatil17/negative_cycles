@@ -40,11 +40,22 @@ def find_negative_cycle(graph, graph_labels):
                 curr = int(predecessor[i])
                 gain = np.float128(graph[prev][curr])
 
-                while curr != i:
-                    negative_cycle.append(graph_labels[int(curr)])
-                    prev = curr
-                    curr = int(predecessor[curr])
-                    gain *= np.float128(graph[prev][curr])
+                count = 0
+                try:
+                    while curr != i:
+                        negative_cycle.append(graph_labels[curr])
+                        prev = curr
+                        curr = int(predecessor[curr])
+                        gain *= np.float128(graph[prev][curr])
+                        count += 1
+                except MemoryError as e:
+                    print 'Graph: {0}'.format(graph)
+                    print 'Predecessor: {0}'.format(predecessor)
+                    print 'Count: {0}'.format(count)
+                    print 'Gain: {0}'.format(gain)
+                    print 'Distance: {0}'.format(distance)
+                    print e
+                    return None, None
 
                 negative_cycle.append(graph_labels[i])
                 return negative_cycle, gain

@@ -51,6 +51,9 @@ def find_negative_cycle(graph, graph_labels):
                 except MemoryError as e:
                     print 'Graph: {0}'.format(graph)
                     print 'Predecessor: {0}'.format(predecessor)
+                    print 'Cycle[:10]: {0}'.format(negative_cycle[:10])
+                    print 'distance[i] * weight: {0}'.format(round(distance[i] * weight, precision))
+                    print 'dt_j: {0}'.format(round(dt_j, precision))
                     print 'Count: {0}'.format(count)
                     print 'Gain: {0}'.format(gain)
                     print 'Distance: {0}'.format(distance)

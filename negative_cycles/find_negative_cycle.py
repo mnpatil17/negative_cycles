@@ -5,8 +5,7 @@
 #
 
 import numpy as np
-from bellman_ford import multiplicative_bellman_ford
-from utils import get_prec
+from bellman_ford import multiplicative_bellman_ford_with_term_status
 
 
 def find_negative_cycle(graph, graph_labels):
@@ -21,7 +20,9 @@ def find_negative_cycle(graph, graph_labels):
              returns (None, None).
     """
 
-    distance, predecessor = multiplicative_bellman_ford(graph)
+    distance, predecessor, terminated_early = multiplicative_bellman_ford_with_term_status(graph)
+    if terminated_early:
+        return None, None
 
     for i, node_a_weights in enumerate(graph):
         for j, weight in enumerate(node_a_weights):
@@ -29,10 +30,7 @@ def find_negative_cycle(graph, graph_labels):
             if weight is None:
                 continue
 
-            precision = min(get_prec(distance[i]), get_prec(weight), get_prec(distance[j]))
-
-            dt_j = distance[j] if distance[j] == float('inf') else round(distance[j], precision)
-            if round(distance[i] * weight, precision) < round(dt_j, precision):
+            if distance[i] * weight - distance[j] < -1.0e-8:  # Accounts for floating-pt error.
                 negative_cycle = []
                 negative_cycle.append(graph_labels[i])
 
@@ -40,12 +38,27 @@ def find_negative_cycle(graph, graph_labels):
                 curr = int(predecessor[i])
                 gain = np.float128(graph[prev][curr])
 
-                while curr != i:
-                    negative_cycle.append(graph_labels[int(curr)])
-                    prev = curr
-                    curr = int(predecessor[curr])
-                    gain *= np.float128(graph[prev][curr])
+                count = 0
+                try:
+                    while curr != i:
+                        negative_cycle.append(graph_labels[curr])
+                        prev = curr
+                        curr = int(predecessor[curr])
+                        gain *= np.float128(graph[prev][curr])
+                        count += 1
+                except MemoryError as e:
+                    print 'Graph: {0}'.format(graph)
+                    print 'Predecessor: {0}'.format(predecessor)
+                    print 'Cycle[:10]: {0}'.format(negative_cycle[:10])
+                    print 'distance[i] * weight: {0}'.format(distance[i] * weight)
+                    print 'distance[j]: {0}'.format(distance[j])
+                    print 'Count: {0}'.format(count)
+                    print 'Gain: {0}'.format(gain)
+                    print 'Distance: {0}'.format(distance)
+                    print e
+                    return None, None
 
                 negative_cycle.append(graph_labels[i])
                 return negative_cycle, gain
+
     return None, None

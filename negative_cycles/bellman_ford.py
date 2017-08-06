@@ -89,9 +89,7 @@ def bellman_ford_with_term_status(graph, is_multiplicative=False):
 
         # Check for early termination
         if np.all(distance == prev_distance):
-            print '[{0}] Finished Bellman Ford EARLY'.format(multiprocessing.current_process().pid)
             return distance, predecessor, True
         prev_distance = list(distance)
 
-    print '[{0}] Finished Bellman Ford'.format(multiprocessing.current_process().pid)
     return distance, predecessor, False

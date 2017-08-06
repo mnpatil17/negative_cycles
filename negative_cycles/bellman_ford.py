@@ -3,18 +3,43 @@
 #
 
 import numpy as np
-from utils import get_prec, is_int
+import multiprocessing
 
+
+#
+# Multiplicative Bellman Ford
+#
 
 def multiplicative_bellman_ford(graph):
     return bellman_ford(graph, is_multiplicative=True)
 
 
+def multiplicative_bellman_ford_with_term_status(graph):
+    return bellman_ford_with_term_status(graph, is_multiplicative=True)
+
+
+#
+# Additive Bellman Ford
+#
+
 def additive_bellman_ford(graph):
     return bellman_ford(graph, is_multiplicative=False)
 
 
+def additive_bellman_ford_with_term_status(graph):
+    return bellman_ford_with_term_status(graph, is_multiplicative=False)
+
+#
+# Agnostic Bellman Ford
+#
+
+
 def bellman_ford(graph, is_multiplicative=False):
+    dist, pred, _ = bellman_ford_with_term_status(graph, is_multiplicative=is_multiplicative)
+    return dist, pred
+
+
+def bellman_ford_with_term_status(graph, is_multiplicative=False):
     """
     An implementation of the multiplication-based Bellman-Ford algorithm.
 
@@ -31,17 +56,21 @@ def bellman_ford(graph, is_multiplicative=False):
     :return: a tuple, where the zero-th item is the distance array output from the Bellman-Ford
              Algorithm, as well as the predecessor array to find paths
     """
+
+    # print '[{0}] Entered Bellman Ford'.format(multiprocessing.current_process().pid)
     operator = (lambda x, y: x * y) if is_multiplicative else (lambda x, y: x + y)
-    lowest_precision = float('inf')
 
     # Create a distance array with value infinity
-    distance = np.zeros(len(graph)).astype(np.float64)
+    distance = np.zeros(len(graph)).astype(np.float128)
     distance.fill(float('inf'))
-    distance[0] = 1.0 if is_multiplicative else 0
+    distance[0] = 1.0 if is_multiplicative else 0.0
+    prev_distance = list(distance)
 
     # Create a predecessor array with value None
     predecessor = np.zeros(len(graph))
     predecessor.fill(-1)
+
+    # print '[{0}] Initialized Bellman Ford'.format(multiprocessing.current_process().pid)
 
     for _ in range(len(graph) - 1):
 
@@ -52,19 +81,17 @@ def bellman_ford(graph, is_multiplicative=False):
                 if weight is None:
                     continue
 
-                # Handle precision development
-                precision = min(get_prec(distance[i]), get_prec(weight), get_prec(distance[j]))
-                lowest_precision = min(lowest_precision, precision)
+                new_dist = operator(distance[i], weight)
 
-                # Find the correct precision, compensating for infinity
-                dt_j = distance[j] if distance[j] == float('inf') or is_int(distance[j]) \
-                    else round(distance[j], precision)
-
-                raw_new_dist = operator(distance[i], weight)
-                new_dist = raw_new_dist if is_int(raw_new_dist) else round(raw_new_dist, precision)
-
-                if new_dist < dt_j:
+                if new_dist - distance[j] < -1.0e-8:  # Accounts for floating-pt error.
                     distance[j] = new_dist
                     predecessor[j] = i
 
-    return distance, predecessor
+        # Check for early termination
+        if np.all(distance == prev_distance):
+            print '[{0}] Finished Bellman Ford EARLY'.format(multiprocessing.current_process().pid)
+            return distance, predecessor, True
+        prev_distance = list(distance)
+
+    print '[{0}] Finished Bellman Ford'.format(multiprocessing.current_process().pid)
+    return distance, predecessor, False

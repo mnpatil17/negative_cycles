@@ -68,10 +68,13 @@ class TestNegativeCycles(unittest.TestCase):
         graph[3][2] = 1 / 10.191
 
         cycle, gain = find_negative_cycle(graph, node_labels)
-        self._check_none(cycle)
-        self._check_none(gain)
+        self._check_array(cycle, ['A', 'B', 'D', 'A'])
+        self._check(gain, 1.003162037)
 
-    def test_live_example_graph(self):
+    def test_low_float_precision_pass(self):
+        """
+        This test requires some degree of rounding (low floating point precision) in order to pass.
+        """
 
         node_labels = np.array(['A', 'B', 'C', 'D'])
         graph = np.array([[1.00000000e+00, 1.00000000e+00, 1.09110747e-02, 4.21229992e-02],
@@ -82,3 +85,18 @@ class TestNegativeCycles(unittest.TestCase):
         cycle, gain = find_negative_cycle(graph, node_labels)
         self._check_array(cycle, ['B', 'C', 'A', 'B'])
         self._check(gain, 1722.0969)
+
+    def test_high_float_precision_pass(self):
+        """
+        This test requires high floating point precision to pass correctly.
+        """
+
+        node_labels = np.array(['A', 'B', 'C', 'D'])
+        graph = np.array([[1.0, .00037823019673030513, .0045147343459408405, .024006070586130614],
+                          [2643.8925517970850, 1.0, 11.978045876628919000, 75.3012048],
+                          [221.49697487717998, 0.08348607196029861, 1.0, None],
+                          [41.65613011976, 0.01328, None, 1.0]])
+
+        cycle, gain = find_negative_cycle(graph, node_labels)
+        self._check_array(cycle, ['B', 'D', 'A', 'B'])
+        self._check(gain, 1.18641613601)

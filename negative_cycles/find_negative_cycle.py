@@ -6,6 +6,7 @@
 
 import numpy as np
 from bellman_ford import multiplicative_bellman_ford_with_term_status
+import threading
 
 
 def find_negative_cycle(graph, graph_labels):
@@ -38,25 +39,25 @@ def find_negative_cycle(graph, graph_labels):
                 curr = int(predecessor[i])
                 gain = np.float128(graph[prev][curr])
 
-                count = 0
-                try:
-                    while curr != i:
-                        negative_cycle.append(graph_labels[curr])
-                        prev = curr
-                        curr = int(predecessor[curr])
-                        gain *= np.float128(graph[prev][curr])
-                        count += 1
-                except MemoryError as e:
-                    print 'Graph: {0}'.format(graph)
-                    print 'Predecessor: {0}'.format(predecessor)
-                    print 'Cycle[:10]: {0}'.format(negative_cycle[:10])
-                    print 'distance[i] * weight: {0}'.format(distance[i] * weight)
-                    print 'distance[j]: {0}'.format(distance[j])
-                    print 'Count: {0}'.format(count)
-                    print 'Gain: {0}'.format(gain)
-                    print 'Distance: {0}'.format(distance)
-                    print e
-                    return None, None
+                count = 1
+                while curr != i:
+                    negative_cycle.append(graph_labels[curr])
+                    prev = curr
+                    curr = int(predecessor[curr])
+                    gain *= np.float128(graph[prev][curr])
+                    count += 1
+                    if count > len(predecessor):
+                        print 'Undesirable Graph Found'
+                        print 'Graph: {0}'.format(graph)
+                        print 'Predecessor: {0}'.format(predecessor)
+                        print 'Cycle: {0}'.format(negative_cycle)
+                        print 'distance[i] * weight: {0}'.format(distance[i] * weight)
+                        print 'distance[j]: {0}'.format(distance[j])
+                        print 'Count: {0}'.format(count)
+                        print 'Gain: {0}'.format(gain)
+                        print 'Distance: {0}'.format(distance)
+                        print '\n'
+                        return None, None
 
                 negative_cycle.append(graph_labels[i])
                 return negative_cycle, gain
